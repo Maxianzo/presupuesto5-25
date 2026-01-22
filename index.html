@@ -1,3 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presupuesto</title>
+
+<style>
+body { font-family: Arial; text-transform: uppercase; }
+section { margin: 20px auto; max-width: 900px; }
+h2 { background:#f0f00a; padding:10px; border-radius:20px; text-align:center; }
+
+.panel,.pedido{
+    padding:20px;
+    border-radius:30px;
+    box-shadow:5px 5px 10px #000;
+    border:3px inset #000;
+}
+#listaClientes{
+    border:2px solid #000;
+    border-radius:15px;
+    max-height:150px;
+    overflow-y:auto;
+    display:none;
+    background:#fff;
+    position:relative;
+    z-index:1000;
+}
+
+#listaClientes div{
+    padding:10px;
+    cursor:pointer;
+    border-bottom:1px solid #ccc;
+}
+
+#listaClientes div:hover{
+    background:#f0f00a;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.item input, textarea{
+    width:60%;
+    text-align:center;
+    border-radius:20px;
+    padding:6px;
+}
+
+input[type="search"], input[type="text"]{
+    width:100%;
+    padding:12px;
+    border-radius:20px;
+    border:2px solid #000;
+    margin-bottom:10px;
+}
+
+textarea{
+    width:100%;
+    resize:none;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th,td{ border:1px solid #000; padding:6px; text-align:center; }
+
+button{
+    padding:8px 20px;
+    border-radius:20px;
+    border:2px solid #000;
+    cursor:pointer;
+    margin:5px;
+}
+
+.subtotal{
+    text-align:right;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+@media print{
+    .panel,.acciones,.buscador,.catalogo,.cliente{ display:none; }
+    body{ text-transform:none; }
+    .pedido{ box-shadow:none; border:none; }
+}
+</style>
+</head>
+
+<body>
+
+<section class="panel">
+<h2>Configuración de precios</h2>
+<div id="config"></div>
+<button onclick="guardarPrecios()">Guardar precios</button>
+</section>
+
+<section class="pedido">
+<h2>Presupuesto</h2>
+
+<!-- CLIENTE -->
+<div class="cliente">
+    <h3>Datos del cliente</h3>
+    <input type="search" id="clienteNombre" placeholder="Nombre del cliente">
+    <div id="listaClientes"></div>
+
+    <input type="text" id="clienteDireccion" placeholder="Dirección">
+    <textarea id="clienteDescripcion" rows="3" placeholder="Descripción adicional"></textarea>
+</div>
+
+<hr>
+
+<div class="buscador">
+    <input type="search" id="busqueda" placeholder="Buscar producto...">
+</div>
+
+<div class="catalogo" id="catalogo"></div>
+
+<h3>Previsualización del pedido</h3>
+<table id="preview"></table>
+<div class="subtotal" id="subtotal">SUBTOTAL: $0</div>
+
+<div class="acciones">
+    <button onclick="calcular()">Calcular total</button>
+    <button onclick="enviarWhatsApp()">📲 WhatsApp</button>
+    <button onclick="imprimir()">🧾 PDF</button>
+</div>
+
+<table id="tabla"></table>
+<h3 id="total">TOTAL: $0</h3>
+</section>
+
+<button style="background:red" onclick="resetear()">Restablecer productos</button>
 <script>
 /* ================= CONFIG EMPRESA ================= */
 const EMPRESA_ID = "presupuesto5_25";
@@ -202,3 +340,6 @@ function enviarWhatsApp(){
 
 function imprimir(){ window.print(); }
 </script>
+
+</body>
+</html>
